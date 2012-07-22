@@ -2,11 +2,38 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <?php
 $letters = array(
-":" => array("num" => 1, "order" => 0),
-"'" => array("num" => 1, "order" => 1),
-" " => array("num" => 1, "order" => 2),
-";" => array("num" => 1, "order" => 3),
-"$" => array("num" => 1, "order" => 4),
+"0" => array("num" => 9, "order" => 0),
+"1" => array("num" => 8, "order" => 0),
+"2" => array("num" => 7, "order" => 0),
+"3" => array("num" => 6, "order" => 0),
+"4" => array("num" => 5, "order" => 0),
+"5" => array("num" => 4, "order" => 0),
+"6" => array("num" => 3, "order" => 0),
+"7" => array("num" => 2, "order" => 0),
+"8" => array("num" => 1, "order" => 0),
+"9" => array("num" => 9, "order" => 9),
+"{" => array("num" => 0, "order" => 1),
+"}" => array("num" => 0, "order" => 2),
+"+" => array("num" => 0, "order" => 3),
+"-" => array("num" => 0, "order" => 4),
+"/" => array("num" => 0, "order" => 5),
+"*" => array("num" => 0, "order" => 6),
+"^" => array("num" => 0, "order" => 7),
+"," => array("num" => 0, "order" => 8),
+"]" => array("num" => 0, "order" => 9),
+":" => array("num" => 1, "order" => 1),
+"'" => array("num" => 1, "order" => 2),
+" " => array("num" => 1, "order" => 3),
+";" => array("num" => 1, "order" => 4),
+"$" => array("num" => 1, "order" => 5),
+"=" => array("num" => 1, "order" => 6),
+"(" => array("num" => 1, "order" => 7),
+")" => array("num" => 1, "order" => 8),
+"[" => array("num" => 1, "order" => 9),
+"_" => array("num" => 2, "order" => 9),
+">" => array("num" => 3, "order" => 9),
+"<" => array("num" => 4, "order" => 9),
+"." => array("num" => 5, "order" => 9),
 "a" => array("num" => 2, "order" => 1),
 "b" => array("num" => 2, "order" => 2),
 "c" => array("num" => 2, "order" => 3),
@@ -75,7 +102,7 @@ function mb_str_split($str){
 
 function decode_password ($key) {
 	global $letters;
-	$key_let = mb_str_split(urldecode($key));
+	$key_let = mb_str_split(rawurldecode($key));
 	foreach ($key_let as $i => $value) {
 		if(fmod($i, 2) != 0){
 			$orders[] = $value;
@@ -83,6 +110,7 @@ function decode_password ($key) {
 			$nums[] = $value;
 		}
 	}
+
 	for($i = 0; $i <= count($key_let)/2; $i++){
 	$letter = array_search(array("num" => $nums[$i], "order" => $orders[$i]), $letters);
 	$num = $nums[$i];
@@ -103,7 +131,7 @@ function decode_password ($key) {
 
 function encode_password($pass){
 	global $letters;
-	$pass_let = mb_str_split(urldecode($pass));
+	$pass_let = mb_str_split(rawurldecode($pass));
 	foreach ($pass_let as $letter) {
 		$value = $letters[$letter];
 		$num = $value["num"];
